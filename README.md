@@ -4,12 +4,15 @@ A linux kernel modul which hooks into the sys_call_table. It replaces the sys_ex
 
 <br>
 to compile it:
+
 ```
 make
+
 ```
+
+
 to load it:
 
 ```
 sudo insmod interceptor.ko && sudo rmmod interceptor.ko
 ```
-<br>
