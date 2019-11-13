@@ -1,5 +1,5 @@
-#KDIR		:= /lib/modules/$(shell uname -r)/build
-KDIR    := ~/src/linux
+KDIR		:= /lib/modules/$(shell uname -r)/build
+#KDIR    := ~/src/linux
 SOURCES		:= $(patsubst %.o,%.c,$(OBJECTS))
 
 obj-m += interceptor.o

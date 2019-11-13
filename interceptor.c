@@ -1,5 +1,8 @@
+#include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
+
+MODULE_LICENSE("GPL");
 
 unsigned long **sys_call_table;
 
