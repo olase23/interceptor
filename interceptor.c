@@ -55,8 +55,10 @@ static void enable_page_protection(void)
 
 static int __init interceptor_start(void)
 {
-	if(!(sys_call_table = aquire_sys_call_table()))
+	if(!(sys_call_table = aquire_sys_call_table())) {
+	  printk(KERN_INFO "Interceptor abort loading.\n");
 		return -1;
+  }
 
 	disable_page_protection();
 	old_sys_exit = (void *)sys_call_table[__NR_exit];
