@@ -64,7 +64,7 @@ static int __init interceptor_start(void)
 	old_sys_exit = (void *)sys_call_table[__NR_exit];
 	sys_call_table[__NR_exit] = (unsigned long *)new_sys_exit;
 	enable_page_protection();
-	printk(KERN_INFO "Interceptor successfully loaded...\n");
+	printk(KERN_INFO "Interceptor: new exit function on addr: %lx\n", (unsigned long *)new_sys_exit);
 	return 0;
 }
 
