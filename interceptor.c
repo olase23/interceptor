@@ -23,13 +23,14 @@ static void change_cstar_target(void) {
   for_each_present_cpu(cpu) {
 
     if (boot_cpu_has(X86_FEATURE_SYSCALL32)) {
-      printk(KERN_INFO "syscall compatibility mode found");
+      printk(KERN_INFO "interceptor: syscall compatibility mode found");
 
       old_cstar_entry = (void *)native_read_msr(MSR_CSTAR);
       if (old_cstar_entry != 0) {
         wrmsrl_on_cpu(cpu, MSR_CSTAR, (unsigned long)new_cstar_entry);
-        printk(KERN_INFO "set new syscall compatibility mode entry: %lx "
-                         "for CPU: %i\n",
+        printk(KERN_INFO
+               "interceptor: set new syscall compatibility mode entry: %lx "
+               "for CPU: %i\n",
                (unsigned long)new_cstar_entry, cpu);
       }
     }
@@ -82,7 +83,7 @@ static void enable_page_protection(void) {
 
 static int __init interceptor_start(void) {
   if (!(sys_call_table = aquire_sys_call_table())) {
-    printk(KERN_INFO "Interceptor abort loading.\n");
+    printk(KERN_INFO "interceptor: no sys_call_table found - abort loading.\n");
     return -1;
   }
 
@@ -93,14 +94,14 @@ static int __init interceptor_start(void) {
 
   change_cstar_target();
 
-  printk(KERN_INFO "Interceptor: new exit function on addr: %lx\n",
+  printk(KERN_INFO "interceptor: new exit function on addr: %lx\n",
          (unsigned long)new_sys_exit);
   return 0;
 }
 
 static void __exit interceptor_end(void) {
 
-  printk(KERN_INFO "unloading Interceptor...\n");
+  printk(KERN_INFO "interceptor: unloading Interceptor...\n");
 
   if (!sys_call_table)
     return;
